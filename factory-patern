@@ -1,0 +1,67 @@
+from abc import ABCMeta, abstractmethod
+
+
+class AbstractDegree(metaclass=ABCMeta):
+    @abstractmethod
+    def info(self):
+        pass
+
+
+class BE(AbstractDegree):
+    def info(self):
+        print('Bachelor of engeneering')
+
+    def __str__(self):
+        return 'Bachelor of engeneering'
+
+
+class ME(AbstractDegree):
+    def info(self):
+        print('Master of engeneering')
+
+    def __str__(self):
+        return 'Master of engeneering'
+
+
+class MBA(AbstractDegree):
+    def info(self):
+        print('Master of business administor')
+
+    def __str__(self):
+        return 'Master of business administor'
+
+
+class ProfileAbstractFactory:
+    def __init__(self):
+        self._degrees = []
+        self.createProfile()
+
+    @abstractmethod
+    def createProfile(self):
+        pass
+
+    def add_degree(self, degree):
+        self._degrees.append(degree)
+
+    def get_degree(self):
+        return self._degrees
+
+
+class ManagerFactory(ProfileAbstractFactory):
+    def createProfile(self):
+        self.add_degree(BE())
+        self.add_degree(MBA())
+
+
+class EngeneerFactory(ProfileAbstractFactory):
+    def createProfile(self):
+        self.add_degree(BE())
+        self.add_degree(ME())
+
+
+profile_typ = input('Manager/Engineer')
+profil = eval(profile_typ + 'Factory')()
+print(('Create Profile of', profile_typ))
+print('Profile has following degrees -')
+for deg in profil.get_degree():
+    print('-',  deg)
