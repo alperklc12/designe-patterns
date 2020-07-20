@@ -53,15 +53,21 @@ class ManagerFactory(ProfileAbstractFactory):
         self.add_degree(MBA())
 
 
-class EngeneerFactory(ProfileAbstractFactory):
+class EngineerFactory(ProfileAbstractFactory):
     def createProfile(self):
         self.add_degree(BE())
         self.add_degree(ME())
 
 
+class ProfilCreatorFactory:
+    @classmethod
+    def create_profile(cls, profile_typ):
+        return eval(profile_typ + 'Factory')()
+
+
 profile_typ = input('Manager/Engineer')
-profil = eval(profile_typ + 'Factory')()
+profil = ProfilCreatorFactory.create_profile(profile_typ)
 print(('Create Profile of', profile_typ))
 print('Profile has following degrees -')
 for deg in profil.get_degree():
-    print('-',  deg)
+    print('-', deg)
