@@ -1,0 +1,28 @@
+from abc import ABCMeta, abstractmethod
+
+
+class Person(metaclass=ABCMeta):
+    @abstractmethod
+    def create(self):
+        pass
+
+
+class HR(Person):
+    def create(self, name):
+        print(f'HR {name} is created')
+
+
+class Engineer(Person):
+    def create(self, name):
+        print(f'Engineer {name} is created')
+
+
+class PersonFactory:
+    @classmethod
+    def createPerson(cls, designation: "Enter Class Name", name):
+        eval(designation)().create(name)
+
+
+desgination_ = input('Enter Class Name')
+name = input('Enter Name')
+PersonFactory.createPerson(desgination_, name)
